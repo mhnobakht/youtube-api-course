@@ -1,5 +1,9 @@
 <?php
 
-$path = $_SERVER['REQUEST_URI'];
+require_once 'autoload.php';
 
-echo $path;
+//  GET URL & REQUEST TYPE 
+
+$requestUrl = parse_url(htmlspecialchars($_SERVER['REQUEST_URI']), PHP_URL_PATH);
+$requestMethod = htmlspecialchars($_SERVER['REQUEST_METHOD']);
+
