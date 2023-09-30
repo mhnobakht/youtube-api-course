@@ -11,7 +11,7 @@ class Database {
     private $host = 'localhost';
     private $username = 'root';
     private $password = '';
-    private $database = 'ooplogin_dbs';
+    private $database = 'quotes_api_dbs';
     private $port     = 3307;
     private $connection;
 

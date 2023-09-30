@@ -5,6 +5,9 @@ use Controllers\RouteController;
 $route = new RouteController();
 
 
-// add new routes here.
+// Home Routes
 $route->add('/', 'GET', 'Controllers\HomeController', 'home');
-$route->add('/quotes/{id}', 'GET', 'Controllers\QuoteController', 'index');
+
+// Quote Routes
+$route->add('/quotes', 'GET', 'Controllers\QuoteController', 'index');
+$route->add('/quotes/{id}', 'GET', 'Controllers\QuoteController', 'getQuote');
