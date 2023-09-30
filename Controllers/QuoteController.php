@@ -195,4 +195,32 @@ class QuoteController extends Database {
         echo json_encode($response);
     }
 
+
+    public function getQuoteByUserId($id) {
+        $id = $this->sanitizeInput($id['id']);
+
+        $sql = "SELECT quotes.*, users.name AS username FROM $this->table INNER JOIN users ON users.id = quotes.user_id WHERE users.id = ?";
+
+        $params = [$id];
+
+        $stmt = $this->executeStatement($sql, $params);
+
+        $rows = $stmt->get_result();
+
+        if($rows->num_rows <= 0) {
+            $response = [
+                'status' => 'error',
+                'message' => 'no record exists in dbs'
+            ];
+        }else{
+            $response = [];
+
+            while($row = $rows->fetch_assoc()) {
+                $response[] = $row;
+            }
+        }
+
+        echo json_encode($response);
+    }
+
 }
