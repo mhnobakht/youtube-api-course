@@ -2,7 +2,9 @@
 
 namespace Controllers;
 
-class QuoteController {
+use Database\Database;
+
+class QuoteController extends Database {
 
 
     public function index($params) {

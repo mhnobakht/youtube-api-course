@@ -4,7 +4,7 @@ namespace Controllers;
 
 use Traits\SanitizerTrait;
 
-class Route {
+class RouteController {
 
     use SanitizerTrait;
     

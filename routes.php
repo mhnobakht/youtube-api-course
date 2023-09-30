@@ -1,8 +1,8 @@
 <?php
 
-use Controllers\Route;
+use Controllers\RouteController;
 
-$route = new Route();
+$route = new RouteController();
 
 
 // add new routes here.
