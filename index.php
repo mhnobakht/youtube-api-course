@@ -1,18 +1,15 @@
 <?php
+// set header
 header('Content-Type: application/json');
-use Controllers\Route;
 
+// include files
 require_once 'autoload.php';
+require_once 'routes.php';
+
 
 //  GET URL & REQUEST TYPE 
-
 $requestUrl = parse_url(htmlspecialchars($_SERVER['REQUEST_URI']), PHP_URL_PATH);
 $requestMethod = htmlspecialchars($_SERVER['REQUEST_METHOD']);
 
-$route = new Route();
-
-$route->add('/', 'GET', 'Controllers\HomeController', 'home');
-$route->add('/quotes/{id}', 'GET', 'Controllers\QuoteController', 'index');
-
-
+// load routes here.
 $route->match($requestUrl, $requestMethod);

@@ -2,7 +2,11 @@
 
 namespace Controllers;
 
+use Traits\SanitizerTrait;
+
 class Route {
+
+    use SanitizerTrait;
     
     private $routes = [];
 
@@ -24,6 +28,9 @@ class Route {
 
 
     public function match($requestUrl, $requestMethod) {
+        
+        $requestUrl = $this->sanitizeInput($requestUrl);
+        $requestMethod = $this->sanitizeInput($requestMethod);
 
         foreach($this->routes as $route) {
 
@@ -46,6 +53,11 @@ class Route {
     }
 
     private function callControllerAction($controller, $action, $params) {
+        // sanitize inputs
+        $controller = $this->sanitizeInput($controller);
+        $action = $this->sanitizeInput($action);
+        $params = $this->sanitizeInput($params);
+
         $controllerInstance = new $controller();
         if(method_exists($controllerInstance, $action)) {
             call_user_func_array([$controllerInstance, $action], array($params));

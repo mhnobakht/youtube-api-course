@@ -2,10 +2,12 @@
 
 function classAutoloader($className) {
 
-    $baseDir = __DIR__.DIRECTORY_SEPARATOR."Controllers".DIRECTORY_SEPARATOR;
+    
 
     $className = trim($className, '\\');
-    $className = explode('\\', $className)[1];
+    $classNameArray = explode('\\', $className);
+    $baseDir = __DIR__.DIRECTORY_SEPARATOR.$classNameArray[0].DIRECTORY_SEPARATOR;
+    $className = $classNameArray[1];
 
     $filePath = $baseDir.$className.'.php';
 
