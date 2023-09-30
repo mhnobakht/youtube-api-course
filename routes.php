@@ -14,3 +14,4 @@ $route->add('/quotes/{id}', 'GET', 'Controllers\QuoteController', 'getQuote');
 $route->add('/quotes', 'POST', 'Controllers\QuoteController', 'store');
 $route->add('/quotes/{id}', 'PUT', 'Controllers\QuoteController', 'update');
 $route->add('/quotes/{id}', 'DELETE', 'Controllers\QuoteController', 'delete');
+$route->add('/quotes/author/{author}', 'GET', 'Controllers\QuoteController', 'quoteByAuthor');

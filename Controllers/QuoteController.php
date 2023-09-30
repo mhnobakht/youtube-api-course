@@ -166,4 +166,33 @@ class QuoteController extends Database {
         echo json_encode($response);
     }
 
+    public function quoteByAuthor($author) {
+        $author = $this->sanitizeInput($author['author']);
+        $author = str_replace('%20', ' ', $author);
+        
+        $sql = "SELECT * FROM $this->table WHERE author = ?";
+        $params = [
+            $author
+        ];
+
+        $stmt = $this->executeStatement($sql, $params);
+
+        $rows = $stmt->get_result();
+
+        if($rows->num_rows <= 0) {
+            $response = [
+                'status' => 'error',
+                'message' => 'no record exists in dbs'
+            ];
+        }else{
+            $response = [];
+
+            while($row = $rows->fetch_assoc()) {
+                $response[] = $row;
+            }
+        }
+
+        echo json_encode($response);
+    }
+
 }
