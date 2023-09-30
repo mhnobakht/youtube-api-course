@@ -12,7 +12,7 @@ class QuoteController extends Database {
 
     public function index() {
 
-        $sql = "SELECT * FROM ".$this->table;
+        $sql = "SELECT quotes.*, users.name AS username FROM $this->table INNER JOIN users ON users.id = quotes.user_id";
         $stmt = $this->executeStatement($sql);
 
         $rows = $stmt->get_result();
