@@ -140,4 +140,30 @@ class QuoteController extends Database {
         echo json_encode($response);
     }
 
+
+    public function delete($id) {
+        $id = $this->sanitizeInput($id['id']);
+
+        $sql = "DELETE FROM $this->table WHERE id = ?";
+        $params = [
+            $id
+        ];
+
+        $stmt = $this->executeStatement($sql, $params);
+
+        if($stmt->affected_rows == 1) {
+            $response = [
+                'status' => 'OK',
+                'message' => 'record deleted successfully'
+            ];
+        }else{
+            $response = [
+                'status' => 'error',
+                'message' => 'can not delete the record'
+            ];
+        }
+
+        echo json_encode($response);
+    }
+
 }
