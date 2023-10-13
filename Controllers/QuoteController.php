@@ -63,6 +63,15 @@ class QuoteController extends Database {
     }
 
     public function store() {
+        // get token
+        $authController = new AuthController();
+        $token = $authController->getToken();
+
+        // get user id
+        $userController = new UserController();
+        $user_id = $userController->getIdByToken($token);
+
+
         $data = $this->sanitizeInput($_POST);
 
         if(!array_key_exists('quote', $data) || !array_key_exists('author', $data)) {
@@ -71,7 +80,6 @@ class QuoteController extends Database {
                 'message' => 'invalid inputs'
             ];
         }else{
-            $user_id = 1;
             $sql = "INSERT INTO $this->table (user_id, quote, author) VALUES (?, ?, ?)";
 
             $params = [
