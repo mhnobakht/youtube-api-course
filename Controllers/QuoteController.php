@@ -152,6 +152,20 @@ class QuoteController extends Database {
     public function delete($id) {
         $id = $this->sanitizeInput($id['id']);
 
+        // check permission
+        $user = new UserController();
+        $access = $user->hasAccess($id);
+
+        if(!$access) {
+            $response = [
+                "error" => '403 forbidden',
+                "message" => 'you dont have access to this record.'
+            ];
+
+            http_response_code(403);
+            echo json_encode($response);die;
+        }
+
         $sql = "DELETE FROM $this->table WHERE id = ?";
         $params = [
             $id
