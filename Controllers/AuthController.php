@@ -14,7 +14,7 @@ class AuthController extends Database {
         $token = $this->getToken();
 
         if(is_null($token)) {
-            return false;
+            $this->unauthorizedUser();die;
         }
 
         $sql = "SELECT id FROM users WHERE token = ?";
@@ -29,7 +29,7 @@ class AuthController extends Database {
         $row = $result->fetch_assoc();
 
         if(is_null($row)) {
-            return false;
+            $this->unauthorizedUser();die;
         }
 
         return true;

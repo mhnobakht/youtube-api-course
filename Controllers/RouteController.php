@@ -9,6 +9,12 @@ class RouteController {
     use SanitizerTrait;
     
     private $routes = [];
+    private $authEnabled = false;
+
+    public function auth() {
+        $this->authEnabled = true;
+        return $this;
+    }
 
     public function add($url, $method, $controller, $action) {
 
@@ -21,7 +27,8 @@ class RouteController {
             'urlPattern' => "#^$urlPattern$#",
             'method' => $method,
             'controller' => $controller,
-            'action' => $action
+            'action' => $action,
+            'auth' => $this->authEnabled
         ];
 
     }
@@ -40,6 +47,12 @@ class RouteController {
                     $controller = $route['controller'];
                     $action = $route['action'];
                     unset($matches[0]);
+
+                    if($route['auth']) {
+                        $authController = new AuthController();
+                        $authController->validateToken();
+                    }
+
                     $this->callControllerAction($controller, $action, $matches);
                     return true;
                 }
