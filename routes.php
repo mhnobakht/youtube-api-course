@@ -8,6 +8,9 @@ $route = new RouteController();
 // Home Routes
 $route->add('/', 'GET', 'Controllers\HomeController', 'home');
 
+// register user
+$route->add('/register', 'POST', 'Controllers\UserController', 'register');
+
 // Quote Routes
 $route->auth()->add('/quotes', 'GET', 'Controllers\QuoteController', 'index');
 $route->auth()->add('/quotes/{id}', 'GET', 'Controllers\QuoteController', 'getQuote');

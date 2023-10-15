@@ -51,4 +51,51 @@ class UserController extends Database {
 
     }
 
+    public function register() {
+        if(!array_key_exists('email', $_POST)) {
+            $response = [
+                'status' => 'error',
+                'message' => 'please send your email address with name email'
+            ];
+
+            echo json_encode($response);die;
+        }
+
+        $email = $this->sanitizeInput($_POST['email']);
+
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $response = [
+                'status' => 'error',
+                'message' => 'please send your email address with name email'
+            ];
+
+            echo json_encode($response);die;
+        }
+
+        $emailArray = explode('@', $email);
+        $name = $emailArray[0];
+        
+        $token = bin2hex(random_bytes(32));
+        
+
+        $sql = "INSERT INTO users (name, email, token) VALUES (?, ?, ?)";
+        $params = [
+            $name,
+            $email,
+            $token
+        ];
+
+        $stmt = $this->executeStatement($sql, $params);
+
+        if($stmt->affected_rows == 1) {
+            MailController::send($email, 'token', $token);
+            $response = [
+                'status' => 'ok',
+                'message' => 'please check your inbox'
+            ];
+
+            echo json_encode($response);
+        }
+    }
+
 }
